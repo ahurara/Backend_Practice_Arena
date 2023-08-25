@@ -1,0 +1,9 @@
+My name is Muhammad Amjad.
+I am student of Bahria University.
+My Current Semester is 5th
+
+My name is Muhammad Amjad.
+I am student of Bahria University.
+My Current Semester is 5th
+
+This will be written using pipes
