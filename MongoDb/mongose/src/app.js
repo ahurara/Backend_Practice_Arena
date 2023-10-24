@@ -11,8 +11,7 @@
 const mongoose = require("mongoose");
 const { boolean } = require("webidl-conversions");
 
-mongoose
-  .connect("mongodb://127.0.0.1:27017/chammp", {
+mongoose.connect("mongodb://127.0.0.1:27017/chammp", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -26,7 +25,10 @@ mongoose
 //   defining schema for the database
 
 const playListSchema=new mongoose.Schema({
-    name: String,
+    name: {
+      type: String,
+      required : true
+    },
     ctype: String,
     videos: Number,
     aurther: String,
@@ -85,9 +87,43 @@ const createMultipleDocuments=async ()=>{
 
 const getDocument=async()=>{
   const data=await Playlist
-  .find({$not:[ {ctype:'backend'} , {videos:60} ] })
-  .select({_id:0});
+  .find()
+  .select({name:1})
+  .sort({name : - 1})
+  // .count()
+
   console.log(data);
 }
+ 
 
+
+// for update
+const updateDocument=async(name)=>{
+  try{
+    const result = await Playlist.updateOne({name :name},
+      {
+        $set :{
+          name : "idont"
+        }
+      },{
+        new:true,
+        useFindAndModify : false
+      }
+      );
+      console.log(result);
+  }
+  catch(err){
+    console.log(err)
+  }
+}
+
+
+//for delete
+const deleteDocument=async(_id)=>{
+const result = await Playlist.deleteOne({_id : _id})
+console.log(result)
+}
+
+//  deleteDocument('64f99ef81843a2b822bba531');
+// updateDocument('react');
 getDocument();
