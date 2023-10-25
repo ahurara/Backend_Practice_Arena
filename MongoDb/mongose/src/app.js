@@ -128,3 +128,4 @@ console.log(result)
 //  deleteDocument('64f99ef81843a2b822bba531');
 // updateDocument('react');
 getDocument();
+getDocument();
