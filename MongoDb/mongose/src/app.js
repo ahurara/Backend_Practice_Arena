@@ -9,6 +9,7 @@
 
 
 const mongoose = require("mongoose");
+const validator=require("validator");
 const { boolean } = require("webidl-conversions");
 
 mongoose.connect("mongodb://127.0.0.1:27017/chammp", {
@@ -29,14 +30,40 @@ const playListSchema=new mongoose.Schema({
       type: String,
       required : true,
       unique:true,
-      upperCase: true,
+      uppercase: true,
       minLength: 4,
       maxLength:20,
+      trim:true, //spaces before the name and after will not be considered in the count
 
     },
-    ctype: String,
-    videos: Number,
+    ctype: {
+      required:true,
+      type:String,
+      lowercase:true,
+      enum:['frontend','backend','database']//The type is valid if it matches one of these elements.
+    },
+    videos: {
+      type:Number,
+      //custom validation
+      validate(value){
+        if(value < 0){
+          throw new Error('Value should be greater than zero');
+        }
+      }
+    },
     aurther: String,
+    email:{
+      type:String,
+      required:true,
+      unique:true,
+      //custom validtation using npm package
+      validate(value){
+        if(!validator.isEmail(value))
+        {
+          throw new Error("invalid email id");
+        }
+      }
+    },
     active: Boolean,
     date:{
         type: Date,
@@ -96,10 +123,11 @@ const insert =async(record)=>{
 }
 
 const record=new Playlist({
-  name:'nass',
-  ctype:'iduno',
+  name:'jass',
+  ctype:'backend',
   aurther:'champ',
   videos:80,
+  email:'hurrerahchamp57@gmail.com',
   active:true
 })
 
@@ -108,7 +136,7 @@ const record=new Playlist({
 const getDocument=async()=>{
   const data=await Playlist
   .find()
-  .select({name:1})
+ // .select({name:1})
   .sort({name : - 1})
   // .count()
 
@@ -146,5 +174,5 @@ console.log(result)
 
 //  deleteDocument('64f99ef81843a2b822bba531');
 // updateDocument('react');
-insert(record);
+//insert(record);
 getDocument();
