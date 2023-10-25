@@ -27,7 +27,12 @@ mongoose.connect("mongodb://127.0.0.1:27017/chammp", {
 const playListSchema=new mongoose.Schema({
     name: {
       type: String,
-      required : true
+      required : true,
+      unique:true,
+      upperCase: true,
+      minLength: 4,
+      maxLength:20,
+
     },
     ctype: String,
     videos: Number,
@@ -84,6 +89,20 @@ const createMultipleDocuments=async ()=>{
 }
 //callin the ollwin method will insert the data
 
+
+//my custom method to add a document to check the validation
+const insert =async(record)=>{
+  const result =await record.save();
+}
+
+const record=new Playlist({
+  name:'nass',
+  ctype:'iduno',
+  aurther:'champ',
+  videos:80,
+  active:true
+})
+
 // createMultipleDocuments();
 
 const getDocument=async()=>{
@@ -127,5 +146,5 @@ console.log(result)
 
 //  deleteDocument('64f99ef81843a2b822bba531');
 // updateDocument('react');
-getDocument();
+insert(record);
 getDocument();
