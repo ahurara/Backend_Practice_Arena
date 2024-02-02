@@ -2,6 +2,8 @@ const express = require("express");
 const router = new express.Router();
 require("../db/conn");
 const register = require('../models/register');
+const brypt= require('bcryptjs');
+
 
 
 router.get('/' , (req , res)=>{
@@ -28,6 +30,9 @@ router.post("/register", async(req,res)=>{
             password : password,
             confirmPaswword : req.body.confirmpassword,
         })
+
+      const token = await registerEmployee.generateAuthToken();
+      console.log(token);
         const registered= await registerEmployee.save();
         res.render('index')
     }
@@ -52,8 +57,14 @@ router.post('/login' , async(req,res)=>{
         const email = req.body.email;
         const password = req.body.password;
         const userDetail= await register.findOne({email:email});
-
-        if(userDetail.password === password){
+        
+        if (!userDetail) {
+            return res.send("User not found");
+        }
+        const isMatch = await brypt.compare(password , userDetail.password);
+        const token = await userDetail.generateAuthToken();
+        console.log(token);
+        if(isMatch){
                 res.render('profile')
         }
         else{
