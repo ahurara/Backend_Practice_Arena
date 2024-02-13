@@ -1,6 +1,10 @@
 #to ignore the node modules
-node_modules
+MongoDb/*/node_modules/
+*.log
 
 # to ignore the env file
-/MongoDb/Login/src/.env
+MongoDb/Login/src/.env
+
+
+
 
