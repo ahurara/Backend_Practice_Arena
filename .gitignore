@@ -1,26 +1,6 @@
-# Node.js
-**/node_modules/
-*.log
+#to ignore the node modules
+node_modules
 
-/node_modules/
-*.log
-# Dependency directories
-/pnpm-debug.log
+# to ignore the env file
+/MongoDb/Login/src/.env
 
-# Optional npm cache directory
-.npm
-
-# Optional eslint cache
-.eslintcache
-
-# dotenv environment variables file
-.env
-
-# Mac files
-.DS_Store
-
-# Windows thumbnail cache files
-Thumbs.db
-
-# VS Code settings
-.vscode/
