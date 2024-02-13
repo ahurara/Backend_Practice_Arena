@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Authorized Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      width: 80%;
+      margin: 50px auto;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      text-align: center;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    p {
+      color: #555;
+      margin-bottom: 20px;
+    }
+
+    .decorative-box {
+      width: 150px;
+      height: 150px;
+      background-color: #ff7f50;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto 30px;
+    }
+
+    .decorative-box i {
+      font-size: 50px;
+      color: #fff;
+    }
+
+    .footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: #333;
+      color: #fff;
+      padding: 10px 0;
+    }
+  </style>
+</head>
+<body>
+ {{>navar}}
+  <div class="container">
+    <div class="decorative-box">
+      <i class="fas fa-lock"></i>
+    </div>
+    
+    <h1>Welcome to the Authorized Page!</h1>
+    <p>Congratulations, you have successfully logged in.</p>
+    <p>Feel free to explore our secure content.</p>
+  </div>
+
+  <div class="footer">
+    <p>&copy; 2024 Your Company. All rights reserved.</p>
+  </div>
+
+</body>
+</html>

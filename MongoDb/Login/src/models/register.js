@@ -45,12 +45,12 @@ const EmployeeSchema = new mongoose.Schema({
 // generating token 
 EmployeeSchema.methods.generateAuthToken = async function (){
     try{
-         const token = await jwt.sign({_id : this._id.toString()}  , "iamabuhurrerahfullstackdeveloper")
+         const token = await jwt.sign({_id : this._id.toString()}  , process.env.SECRET_KEY)
          // inorder to add the token in the db
          this.tokens = this.tokens.concat({token : token});
          await this.save()
         return token;
-    }
+    } 
     catch(err){
         res.send(err)
     }
@@ -60,7 +60,7 @@ EmployeeSchema.methods.generateAuthToken = async function (){
  
 
 EmployeeSchema.pre('save' , async function(next){
-
+    
     if(this.isModified('password')){
        // console.log(`pass before bycrypt :${this.password}`)
         this.password =await bcrypt.hash(this.password  , 10)

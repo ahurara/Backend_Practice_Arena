@@ -3,9 +3,7 @@ const router = new express.Router();
 require("../db/conn");
 const register = require('../models/register');
 const brypt= require('bcryptjs');
-
-
-
+const auth = require("../Middleware/auth");
 router.get('/' , (req , res)=>{
     res.render("index")
 })
@@ -33,6 +31,7 @@ router.post("/register", async(req,res)=>{
 
       const token = await registerEmployee.generateAuthToken();
       console.log(token);
+      res.cookie('JWT', token)  
         const registered= await registerEmployee.save();
         res.render('index')
     }
@@ -52,6 +51,14 @@ router.get('/login' , async(req , res)=>{
 })
 
 
+
+router.get('/authorized',auth,async(req,res) =>{
+   
+    res.render("AuthorizedPage")
+    
+})  
+
+
 router.post('/login' , async(req,res)=>{
     try{
         const email = req.body.email;
@@ -62,13 +69,17 @@ router.post('/login' , async(req,res)=>{
             return res.send("User not found");
         }
         const isMatch = await brypt.compare(password , userDetail.password);
+
         const token = await userDetail.generateAuthToken();
-        console.log(token);
+       // console.log(token);
+        res.cookie('jwtToken',token)
+        //console.log(`cookie stores : ${req.cookies.jwtToken}`)
         if(isMatch){
                 res.render('profile')
         }
         else{
             res.send("Invalid password")
+
         }
     }
     catch(e){
