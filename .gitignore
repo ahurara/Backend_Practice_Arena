@@ -1,7 +1,9 @@
 # Node.js
-node_modules/
+/**/node_modules/
 *.log
 
+/node_modules/
+*.log
 # Dependency directories
 /pnpm-debug.log
 
